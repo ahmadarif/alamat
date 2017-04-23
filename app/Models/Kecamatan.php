@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Kecamatan extends Model
 {
+    use Searchable;
+
     protected $table = 'kecamatan';
     public $timestamps = false;
 

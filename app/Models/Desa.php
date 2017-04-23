@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Desa extends Model
 {
+    use Searchable;
+
     protected $table = 'desa';
     public $timestamps = false;
 
