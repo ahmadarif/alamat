@@ -3,8 +3,16 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +52,45 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $data = [];
+        $responseType = null;
+        $isCustomError = false;
+
+        if ($exception instanceof ValidationException) {
+            $isCustomError = true;
+            $data['message'] = 'Validasi error';
+            $data['error'] = $exception->validator->errors();
+            $responseType = Response::HTTP_BAD_REQUEST;
+        } else if ($exception instanceof NotFoundHttpException) {
+            $isCustomError = true;
+            $data['message'] = 'API tidak tersedia';
+            $responseType = Response::HTTP_NOT_FOUND;
+        } else if ($exception instanceof MethodNotAllowedHttpException) {
+            $isCustomError = true;
+            $data['message'] = 'API tidak tersedia';
+            $responseType = Response::HTTP_METHOD_NOT_ALLOWED;
+        } else if ($exception instanceof ModelNotFoundException) {
+            $isCustomError = true;
+            $data['message'] = 'Data tidak ditemukan';
+            $responseType = Response::HTTP_NO_CONTENT;
+        } else if ($exception instanceof QueryException) {
+            $isCustomError = true;
+            $data['message'] = 'Terjadi kesalahan internal';
+            $responseType = Response::HTTP_INTERNAL_SERVER_ERROR;
+
+            if (config('app.debug')) {
+                $data['error'] = $exception->getMessage();
+            }
+        } else if ($exception instanceof AuthorizationException) {
+            $isCustomError = true;
+            $data['message'] = 'Anda tidak memiliki ijin pada request ini';
+            $responseType = Response::HTTP_UNAUTHORIZED;
+        }
+
+        if ($isCustomError) {
+            return response()->json($data, $responseType);
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -56,10 +103,7 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-
-        return redirect()->guest(route('login'));
+        return response()->json(['message' => 'Anda tidak terautentikasi, silahkan login'], Response::HTTP_UNAUTHORIZED);
     }
+
 }
