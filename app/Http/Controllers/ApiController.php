@@ -47,7 +47,7 @@ class ApiController extends Controller
         return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
     }
 
-    public function desanByProvinsiAndKabupatenKotaAndKecamatan($provinsiId, $kabupatenKotaId, $kecamatanId) {
+    public function desaByProvinsiAndKabupatenKotaAndKecamatan($provinsiId, $kabupatenKotaId, $kecamatanId) {
         $kecamatan = collect(
             Provinsi::findOrFail($provinsiId)
                 ->kabupatenKota()
