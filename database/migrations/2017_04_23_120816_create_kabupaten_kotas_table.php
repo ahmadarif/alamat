@@ -29,6 +29,9 @@ class CreateKabupatenKotasTable extends Migration
      */
     public function down()
     {
+        Schema::table('kabupaten_kota', function (Blueprint $table) {
+            $table->dropForeign(['provinsi_id']);
+        });
         Schema::dropIfExists('kabupaten_kota');
     }
 }
