@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof ModelNotFoundException) {
             $isCustomError = true;
             $data['message'] = 'Data tidak ditemukan';
-            $responseType = Response::HTTP_NO_CONTENT;
+            $responseType = Response::HTTP_UNPROCESSABLE_ENTITY;
         } else if ($exception instanceof QueryException) {
             $isCustomError = true;
             $data['message'] = 'Terjadi kesalahan internal';
