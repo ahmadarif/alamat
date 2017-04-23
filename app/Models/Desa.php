@@ -8,4 +8,8 @@ class Desa extends Model
 {
     protected $table = 'desa';
     public $timestamps = false;
+
+    public function kecamatan() {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+    }
 }
