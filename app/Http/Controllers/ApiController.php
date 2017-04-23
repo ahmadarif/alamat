@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\KabupatenKota;
 use App\Models\Kecamatan;
 use App\Models\Provinsi;
@@ -21,6 +22,11 @@ class ApiController extends Controller
 
     public function kecamatan() {
         $data = collect(Kecamatan::orderBy('name')->paginate(100));
+        return response()->json($data->only('data', 'current_page', 'last_page'));
+    }
+
+    public function desa() {
+        $data = collect(Desa::orderBy('name')->paginate(100));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 }
