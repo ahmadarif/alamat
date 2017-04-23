@@ -46,4 +46,18 @@ class ApiController extends Controller
         );
         return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
     }
+
+    public function desanByProvinsiAndKabupatenKotaAndKecamatan($provinsiId, $kabupatenKotaId, $kecamatanId) {
+        $kecamatan = collect(
+            Provinsi::findOrFail($provinsiId)
+                ->kabupatenKota()
+                ->findOrFail($kabupatenKotaId)
+                ->kecamatan()
+                ->findOrFail($kecamatanId)
+                ->desa()
+                ->orderBy('name')
+                ->paginate(100)
+        );
+        return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
+    }
 }
