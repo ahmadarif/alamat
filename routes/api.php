@@ -18,3 +18,4 @@ Route::get('/kabupatenKota', 'ApiController@kabupatenKota');
 Route::get('/kecamatan', 'ApiController@kecamatan');
 Route::get('/desa', 'ApiController@desa');
 Route::get('/{provinsiId}', 'ApiController@kabupatenKotaByProvinsi');
+Route::get('/{provinsiId}/{kabupatenKotaId}', 'ApiController@kecamatanByProvinsiAndKabupatenKota');

@@ -34,4 +34,16 @@ class ApiController extends Controller
         $data = collect(Provinsi::findOrFail($provinsiId)->kabupatenKota()->orderBy('name')->paginate(100));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
+
+    public function kecamatanByProvinsiAndKabupatenKota($provinsiId, $kabupatenKotaId) {
+        $kecamatan = collect(
+            Provinsi::findOrFail($provinsiId)
+                ->kabupatenKota()
+                ->findOrFail($kabupatenKotaId)
+                ->kecamatan()
+                ->orderBy('name')
+                ->paginate(100)
+        );
+        return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
+    }
 }
