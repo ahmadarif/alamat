@@ -29,4 +29,9 @@ class ApiController extends Controller
         $data = collect(Desa::orderBy('name')->paginate(100));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
+
+    public function kabupatenKotaByProvinsi($provinsiId) {
+        $data = collect(Provinsi::findOrFail($provinsiId)->kabupatenKota()->orderBy('name')->paginate(100));
+        return response()->json($data->only('data', 'current_page', 'last_page'));
+    }
 }
