@@ -15,3 +15,4 @@ use Illuminate\Http\Request;
 
 Route::get('/provinsi', 'ApiController@provinsi');
 Route::get('/kabupatenKota', 'ApiController@kabupatenKota');
+Route::get('/kecamatan', 'ApiController@kecamatan');
