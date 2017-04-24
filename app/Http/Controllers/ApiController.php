@@ -93,6 +93,12 @@ class ApiController extends Controller
         $this->validate($request, [
             'q' => 'required'
         ]);
-        return Desa::search($request->input('q'))->get();
+        $data = [
+            'provinsi' => Provinsi::search($request->input('q'))->get(),
+            'kabupaten_kota' => KabupatenKota::search($request->input('q'))->get(),
+            'kecamatan' => Kecamatan::search($request->input('q'))->get(),
+            'desa' => Desa::search($request->input('q'))->get(),
+        ];
+        return response(compact('data'));
     }
 }
