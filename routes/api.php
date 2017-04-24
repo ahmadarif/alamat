@@ -14,9 +14,17 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/provinsi', 'ApiController@provinsi');
+Route::get('/provinsi/search', 'ApiController@provinsiSearch');
+
 Route::get('/kabupatenKota', 'ApiController@kabupatenKota');
+Route::get('/kabupatenKota/search', 'ApiController@kabupatenKotaSearch');
+
 Route::get('/kecamatan', 'ApiController@kecamatan');
+Route::get('/kecamatan/search', 'ApiController@kecamatanSearch');
+
 Route::get('/desa', 'ApiController@desa');
+Route::get('/desa/search', 'ApiController@desaSearch');
+
 Route::get('/search', 'ApiController@search');
 Route::get('/search/{provinsiId}', 'ApiController@kabupatenKotaByProvinsi');
 Route::get('/search/{provinsiId}/{kabupatenKotaId}', 'ApiController@kecamatanByProvinsiAndKabupatenKota');
