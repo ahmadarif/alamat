@@ -64,7 +64,7 @@ class ApiController extends Controller
     }
 
     public function kecamatanByProvinsiAndKabupatenKota($provinsiId, $kabupatenKotaId) {
-        $kecamatan = collect(
+        $data = collect(
             Provinsi::findOrFail($provinsiId)
                 ->kabupatenKota()
                 ->findOrFail($kabupatenKotaId)
@@ -72,11 +72,11 @@ class ApiController extends Controller
                 ->orderBy('name')
                 ->paginate(100)
         );
-        return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
+        return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
     public function desaByProvinsiAndKabupatenKotaAndKecamatan($provinsiId, $kabupatenKotaId, $kecamatanId) {
-        $kecamatan = collect(
+        $data = collect(
             Provinsi::findOrFail($provinsiId)
                 ->kabupatenKota()
                 ->findOrFail($kabupatenKotaId)
@@ -86,7 +86,7 @@ class ApiController extends Controller
                 ->orderBy('name')
                 ->paginate(100)
         );
-        return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
+        return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
     public function search(Request $request) {
