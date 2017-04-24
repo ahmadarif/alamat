@@ -14,12 +14,12 @@ class Kecamatan extends Model
 {
     use Searchable;
 
+    protected $table = 'kecamatan';
+    public $timestamps = false;
+
     protected $casts = [
         'id' => 'string'
     ];
-
-    protected $table = 'kecamatan';
-    public $timestamps = false;
 
     public function kabupatenKota() {
         return $this->belongsTo(KabupatenKota::class, 'kabupaten_kota_id');

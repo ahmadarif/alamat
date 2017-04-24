@@ -13,12 +13,12 @@ class Provinsi extends Model
 {
     use Searchable;
 
+    protected $table = 'provinsi';
+    public $timestamps = false;
+
     protected $casts = [
         'id' => 'string'
     ];
-
-    protected $table = 'provinsi';
-    public $timestamps = false;
 
     public function kabupatenKota() {
         return $this->hasMany(KabupatenKota::class, 'provinsi_id');

@@ -14,12 +14,12 @@ class KabupatenKota extends Model
 {
     use Searchable;
 
+    protected $table = 'kabupaten_kota';
+    public $timestamps = false;
+
     protected $casts = [
         'id' => 'string'
     ];
-
-    protected $table = 'kabupaten_kota';
-    public $timestamps = false;
 
     public function provinsi() {
         return $this->belongsTo(Provinsi::class, 'provinsi_id');
