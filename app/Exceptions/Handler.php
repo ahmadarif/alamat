@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -85,6 +87,14 @@ class Handler extends ExceptionHandler
             $isCustomError = true;
             $data['message'] = 'Anda tidak memiliki ijin pada request ini';
             $responseType = Response::HTTP_UNAUTHORIZED;
+        } else if ($exception instanceof NoNodesAvailableException) {
+            $isCustomError = true;
+            $data['message'] = 'Elasticsearch: Tidak ada node yang aktif';
+            $responseType = Response::HTTP_INTERNAL_SERVER_ERROR;
+        } else if ($exception instanceof Missing404Exception) {
+            $isCustomError = true;
+            $data['message'] = 'Elasticsearch: Index tidak dapat ditemukan';
+            $responseType = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         if ($isCustomError) {
