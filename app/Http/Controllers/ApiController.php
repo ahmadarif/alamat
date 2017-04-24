@@ -60,4 +60,11 @@ class ApiController extends Controller
         );
         return response()->json($kecamatan->only('data', 'current_page', 'last_page'));
     }
+
+    public function search(Request $request) {
+        $this->validate($request, [
+            'q' => 'required'
+        ]);
+        return Desa::search($request->input('q'))->get();
+    }
 }

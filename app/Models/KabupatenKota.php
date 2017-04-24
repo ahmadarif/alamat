@@ -5,9 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
+/**
+ * @property string id
+ * @property string provinsi_id
+ * @property string name
+ */
 class KabupatenKota extends Model
 {
     use Searchable;
+
+    protected $casts = [
+        'id' => 'string'
+    ];
 
     protected $table = 'kabupaten_kota';
     public $timestamps = false;

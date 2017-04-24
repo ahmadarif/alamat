@@ -5,9 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
+/**
+ * @property string id
+ * @property string name
+ */
 class Provinsi extends Model
 {
     use Searchable;
+
+    protected $casts = [
+        'id' => 'string'
+    ];
 
     protected $table = 'provinsi';
     public $timestamps = false;
