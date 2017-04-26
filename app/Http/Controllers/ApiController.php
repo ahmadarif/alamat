@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
     public function provinsi() {
-        $data = collect(Provinsi::orderBy('name')->paginate(100));
+        $data = collect(Provinsi::orderBy('name')->paginate(20));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
@@ -23,7 +23,7 @@ class ApiController extends Controller
     }
 
     public function kabupatenKota() {
-        $data = collect(KabupatenKota::orderBy('name')->paginate(100));
+        $data = collect(KabupatenKota::orderBy('name')->paginate(20));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
@@ -35,7 +35,7 @@ class ApiController extends Controller
     }
 
     public function kecamatan() {
-        $data = collect(Kecamatan::orderBy('name')->paginate(100));
+        $data = collect(Kecamatan::orderBy('name')->paginate(20));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
@@ -47,7 +47,7 @@ class ApiController extends Controller
     }
 
     public function desa() {
-        $data = collect(Desa::orderBy('name')->paginate(100));
+        $data = collect(Desa::orderBy('name')->paginate(20));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
@@ -59,7 +59,7 @@ class ApiController extends Controller
     }
 
     public function kabupatenKotaByProvinsi($provinsiId) {
-        $data = collect(Provinsi::findOrFail($provinsiId)->kabupatenKota()->orderBy('name')->paginate(100));
+        $data = collect(Provinsi::findOrFail($provinsiId)->kabupatenKota()->orderBy('name')->paginate(20));
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
 
@@ -70,7 +70,7 @@ class ApiController extends Controller
                 ->findOrFail($kabupatenKotaId)
                 ->kecamatan()
                 ->orderBy('name')
-                ->paginate(100)
+                ->paginate(20)
         );
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
@@ -84,7 +84,7 @@ class ApiController extends Controller
                 ->findOrFail($kecamatanId)
                 ->desa()
                 ->orderBy('name')
-                ->paginate(100)
+                ->paginate(20)
         );
         return response()->json($data->only('data', 'current_page', 'last_page'));
     }
